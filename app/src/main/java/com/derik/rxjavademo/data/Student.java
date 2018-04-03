@@ -1,12 +1,10 @@
-package com.fih.idx.rxjavademo;
-
-import android.view.View;
+package com.derik.rxjavademo.data;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by derik on 18-3-6.
+ * Email: weilai0314@163.com
  */
 
 public class Student implements Cloneable {
@@ -22,7 +20,7 @@ public class Student implements Cloneable {
         courses = builder.courses;
     }
 
-    static class Builder {
+    public static class Builder {
         private String name;
         private int age;
         private String gender;

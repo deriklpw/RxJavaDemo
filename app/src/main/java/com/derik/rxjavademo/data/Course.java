@@ -1,7 +1,8 @@
-package com.fih.idx.rxjavademo;
+package com.derik.rxjavademo.data;
 
 /**
  * Created by derik on 18-3-6.
+ * Email: weilai0314@163.com
  */
 
 public class Course {

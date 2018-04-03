@@ -1,4 +1,4 @@
-package com.fih.idx.rxjavademo;
+package com.derik.rxjavademo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.fih.idx.rxjavademo", appContext.getPackageName());
+        assertEquals("com.derik.rxjavademo", appContext.getPackageName());
     }
 }

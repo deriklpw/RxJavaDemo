@@ -1,4 +1,4 @@
-package com.fih.idx.rxjavademo;
+package com.derik.rxjavademo;
 
 import org.junit.Test;
 

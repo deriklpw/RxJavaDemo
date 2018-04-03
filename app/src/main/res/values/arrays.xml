@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="list_items">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>Simple</item>
+        <item>Map</item>
+        <item>FlatMap</item>
+        <item>Take</item>
+        <item>Disposable</item>
+        <item>Zip</item>
+        <item>Timer</item>
         <item>6</item>
         <item>7</item>
         <item>8</item>
