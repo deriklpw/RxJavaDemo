@@ -1,7 +1,5 @@
 package com.derik.rxjavademo.view;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +9,16 @@ import android.widget.TextView;
 
 import com.derik.rxjavademo.R;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -26,8 +26,8 @@ import io.reactivex.schedulers.Schedulers;
  * Email: weilai0314@163.com
  */
 
-public class MapRxJavaActivity extends AppCompatActivity {
-    private static final String TAG = MapRxJavaActivity.class.getSimpleName();
+public class DelayRxJavaActivity extends AppCompatActivity {
+    private static final String TAG = DelayRxJavaActivity.class.getSimpleName();
 
     @BindView(R.id.tv_content)
     TextView mContent;
@@ -41,30 +41,31 @@ public class MapRxJavaActivity extends AppCompatActivity {
     }
 
     /**
-     * 使用map进行事件对象转换
-     *
-     * 将String事件对象，转换为Btimap事件对象
+     * Delay，延迟一定时间后，发送item对象（item1，item2，item3）
      */
     @OnClick(R.id.bt_action)
     public void action(View view) {
-        Log.d(TAG, "action: MapRxJava");
-        Observable.just("ic_launcher", "ic_launcher_round")
+        Log.d(TAG, "action: DelayRxJava");
+        getObservable()
+                .delay(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<String, Bitmap>() {
-                    @Override
-                    public Bitmap apply(String s) throws Exception {
-                        int id = getResources().getIdentifier(s, "mipmap", getPackageName());
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), id);
-                        return bitmap;
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Bitmap>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(Bitmap bitmap) throws Exception {
-                        Log.d(TAG, "onNext, " + bitmap.getByteCount());
-                        mContent.append(""+bitmap.getByteCount());
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, "onNext: " + s);
+                        mContent.append("" + s);
                         mContent.append("\n");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "onError: " + throwable);
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        Log.d(TAG, "onComplete: ");
                     }
                 });
     }
@@ -73,5 +74,9 @@ public class MapRxJavaActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mUnbiner.unbind();
+    }
+
+    private Observable<String> getObservable() {
+        return Observable.just("item1","item2","item3");
     }
 }

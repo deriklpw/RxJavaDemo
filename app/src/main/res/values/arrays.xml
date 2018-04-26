@@ -8,10 +8,25 @@
         <item>Disposable</item>
         <item>Zip</item>
         <item>Timer</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
+        <item>Delay</item>
+        <item>Interval</item>
+        <item>Single</item>
+        <item>Completable</item>
+        <item>Flowable</item>
+        <item>Maybe</item>
+        <item>Buffer</item>
+        <item>Filter</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
         <item>10</item>
     </string-array>
 </resources>

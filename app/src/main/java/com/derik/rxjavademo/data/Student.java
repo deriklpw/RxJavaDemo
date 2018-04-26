@@ -70,10 +70,10 @@ public class Student implements Cloneable {
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
-        str.append("name:" + name + " ,age:" + age + " ,gender:" + gender + " ,");
+        str.append("name=" + name + " ,age=" + age + " ,gender=" + gender + " ,");
         for (Course course : courses) {
             str.append(course.getName());
-            str.append(":");
+            str.append("=");
             str.append(course.getScore());
         }
         return str.toString();

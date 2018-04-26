@@ -1,7 +1,5 @@
 package com.derik.rxjavademo.view;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +9,19 @@ import android.widget.TextView;
 
 import com.derik.rxjavademo.R;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -26,8 +29,8 @@ import io.reactivex.schedulers.Schedulers;
  * Email: weilai0314@163.com
  */
 
-public class MapRxJavaActivity extends AppCompatActivity {
-    private static final String TAG = MapRxJavaActivity.class.getSimpleName();
+public class CompletableRxJavaActivity extends AppCompatActivity {
+    private static final String TAG = CompletableRxJavaActivity.class.getSimpleName();
 
     @BindView(R.id.tv_content)
     TextView mContent;
@@ -41,37 +44,41 @@ public class MapRxJavaActivity extends AppCompatActivity {
     }
 
     /**
-     * 使用map进行事件对象转换
-     *
-     * 将String事件对象，转换为Btimap事件对象
+     * 没有items，没有onNext，只有onComplete， onError
      */
     @OnClick(R.id.bt_action)
     public void action(View view) {
-        Log.d(TAG, "action: MapRxJava");
-        Observable.just("ic_launcher", "ic_launcher_round")
-                .subscribeOn(Schedulers.io())
-                .map(new Function<String, Bitmap>() {
-                    @Override
-                    public Bitmap apply(String s) throws Exception {
-                        int id = getResources().getIdentifier(s, "mipmap", getPackageName());
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), id);
-                        return bitmap;
-                    }
-                })
+        Log.d(TAG, "action: CompletableRxJava");
+        getCompletable().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Bitmap>() {
+                .subscribe(new CompletableObserver() {
                     @Override
-                    public void accept(Bitmap bitmap) throws Exception {
-                        Log.d(TAG, "onNext, " + bitmap.getByteCount());
-                        mContent.append(""+bitmap.getByteCount());
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe: " + d);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: ");
+                        mContent.append("It is Completable, no items and no onNext");
                         mContent.append("\n");
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e);
+                    }
                 });
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mUnbiner.unbind();
+    }
+
+    private Completable getCompletable() {
+        return Completable.timer(1000, TimeUnit.MILLISECONDS);
     }
 }

@@ -14,10 +14,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
+/**
+ * Created by derik on 18-4-3.
+ * Email: weilai0314@163.com
+ */
 
 public class SimpleRxJavaActivity extends AppCompatActivity {
 
@@ -33,24 +42,41 @@ public class SimpleRxJavaActivity extends AppCompatActivity {
         mUnbiner = ButterKnife.bind(this);
     }
 
+    /**
+     * 基础用法
+     */
     @OnClick(R.id.bt_action)
     public void action(View view) {
         Log.d(TAG, "action: SimpleRxJava");
         Observable<String> observable = getObservable();
-        // 此种方式，内部会先转换成Subscriber对象
         Observer<String> observer = getStringObserver();
 
+        //specify run the background thread
         observable.subscribeOn(Schedulers.io())
+                //specify be notified on main thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-        // 不完整定义的回调，RxJava会依据定义，自动创建出Subscriber
-        observable.subscribe(o -> {
-                    Log.d(TAG, "onNext, s=" + o);
-                    mContent.append(o);
-                    mContent.append("\n");
+        observable.subscribe(new Consumer<String>() {
+                                 @Override
+                                 public void accept(String s) throws Exception {
+                                     Log.d(TAG, "onNext, s=" + s);
+                                     mContent.append(s);
+                                     mContent.append("\n");
+
+                                 }
+                             },
+                new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "onError, " + throwable);
+                    }
                 },
-                throwable -> Log.d(TAG, "onError, " + throwable),
-                () -> Log.d(TAG, "completed."));
+                new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        Log.d(TAG, "completed.");
+                    }
+                });
 
     }
 
@@ -82,12 +108,15 @@ public class SimpleRxJavaActivity extends AppCompatActivity {
     }
 
     private Observable<String> getObservable() {
-        return Observable.create(e -> {
-            if (!e.isDisposed()) {
-                e.onNext("Hello");
-                e.onNext("Hi");
-                e.onNext("Aloha");
-                e.onComplete();
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                if (!e.isDisposed()) {
+                    e.onNext("Hello");
+                    e.onNext("Hi");
+                    e.onNext("Peter");
+                    e.onComplete();
+                }
             }
         });
     }

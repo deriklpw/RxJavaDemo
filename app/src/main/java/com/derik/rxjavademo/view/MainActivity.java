@@ -2,6 +2,7 @@ package com.derik.rxjavademo.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myAdapter);
-        myAdapter.setOnItemClickListener(this::handleAction);
+        myAdapter.setOnItemClickListener(new OnItemClick() {
+            @Override
+            public void onItemClick(int position) {
+                handleAction(position);
+            }
+        });
     }
 
     private void handleAction(int position) {
@@ -56,8 +62,73 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getBaseContext(), FlatMapRxJavaActivity.class));
                 break;
             case 3:
+                startActivity(new Intent(getBaseContext(), TakeRxJavaActivity.class));
                 break;
-
+            case 4:
+                startActivity(new Intent(getBaseContext(), DisposableRxJavaActivity.class));
+                break;
+            case 5:
+                //zip
+                break;
+            case 6:
+                startActivity(new Intent(getBaseContext(), TimerRxJavaActivity.class));
+                break;
+            case 7:
+                startActivity(new Intent(getBaseContext(), DelayRxJavaActivity.class));
+                break;
+            case 8:
+                startActivity(new Intent(getBaseContext(), IntervalRxJavaActivity.class));
+                break;
+            case 9:
+                startActivity(new Intent(getBaseContext(), SingleRxJavaActivity.class));
+                break;
+            case 10:
+                startActivity(new Intent(getBaseContext(), CompletableRxJavaActivity.class));
+                break;
+            case 11:
+                startActivity(new Intent(getBaseContext(), FlowableRxJavaActivity.class));
+                break;
+            case 12:
+                startActivity(new Intent(getBaseContext(), MaybeRxJavaActivity.class));
+                break;
+            case 13:
+                startActivity(new Intent(getBaseContext(), BufferRxJavaActivity.class));
+                break;
+            case 14:
+                startActivity(new Intent(getBaseContext(), FilterRxJavaActivity.class));
+                break;
+            case 15:
+                break;
+            case 16:
+                break;
+            case 17:
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
+                break;
+            case 23:
+                break;
+            case 24:
+                break;
+            case 25:
+                break;
+            case 26:
+                break;
+            case 27:
+                break;
+            case 28:
+                break;
+            case 29:
+                break;
+            case 30:
+                break;
             default:
                 break;
         }
@@ -81,9 +152,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyHolder holder, final int position) {
-            holder.itemView.setOnClickListener(view -> {
-                if (onItemClick != null) {
-                    onItemClick.onItemClick(position);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClick != null) {
+                        onItemClick.onItemClick(position);
+                    }
                 }
             });
 
@@ -107,6 +181,11 @@ public class MainActivity extends AppCompatActivity {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
             }
+        }
+
+        @Override
+        public void onViewRecycled(@NonNull MyHolder holder) {
+            super.onViewRecycled(holder);
         }
     }
 

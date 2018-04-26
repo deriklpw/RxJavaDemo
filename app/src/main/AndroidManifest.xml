@@ -19,9 +19,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.SimpleRxJavaActivity"/>
-        <activity android:name=".view.MapRxJavaActivity"/>
-        <activity android:name=".view.FlatMapRxJavaActivity"/>
+        <activity android:name=".view.SimpleRxJavaActivity" />
+        <activity android:name=".view.MapRxJavaActivity" />
+        <activity android:name=".view.FlatMapRxJavaActivity" />
+        <activity android:name=".view.TakeRxJavaActivity" />
+        <activity android:name=".view.DisposableRxJavaActivity" />
+        <activity android:name=".view.TimerRxJavaActivity" />
+        <activity android:name=".view.DelayRxJavaActivity" />
+        <activity android:name=".view.IntervalRxJavaActivity" />
+        <activity android:name=".view.SingleRxJavaActivity" />
+        <activity android:name=".view.CompletableRxJavaActivity" />
+        <activity android:name=".view.FlowableRxJavaActivity" />
+        <activity android:name=".view.MaybeRxJavaActivity" />
+        <activity android:name=".view.BufferRxJavaActivity" />
+        <activity android:name=".view.FilterRxJavaActivity" />
     </application>
 
 </manifest>
