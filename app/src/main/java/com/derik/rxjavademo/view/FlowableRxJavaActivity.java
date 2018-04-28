@@ -66,11 +66,12 @@ public class FlowableRxJavaActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getFlowableSubscriber());
 
+        //reduce，归纳，并将最后的结果发射
         getFlowable()
                 .reduce(0, new BiFunction<Integer, Integer, Integer>() {
                     @Override
                     public Integer apply(Integer t1, Integer t2) {
-
+                        Log.d(TAG, "apply: t1=" + t1 + ", t2=" + t2);
                         return t1 + t2;  //归纳求和
                     }
                 })

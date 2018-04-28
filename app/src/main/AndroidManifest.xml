@@ -33,6 +33,9 @@
         <activity android:name=".view.MaybeRxJavaActivity" />
         <activity android:name=".view.BufferRxJavaActivity" />
         <activity android:name=".view.FilterRxJavaActivity" />
+        <activity android:name=".view.SkipRxJavaActivity" />
+        <activity android:name=".view.ScanRxJavaActivity" />
+        <activity android:name=".view.ReplayRxJavaActivity" />
     </application>
 
 </manifest>

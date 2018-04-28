@@ -98,10 +98,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getBaseContext(), FilterRxJavaActivity.class));
                 break;
             case 15:
+                startActivity(new Intent(getBaseContext(), SkipRxJavaActivity.class));
                 break;
             case 16:
+                startActivity(new Intent(getBaseContext(), ScanRxJavaActivity.class));
                 break;
             case 17:
+                startActivity(new Intent(getBaseContext(), ReplayRxJavaActivity.class));
                 break;
             case 18:
                 break;
